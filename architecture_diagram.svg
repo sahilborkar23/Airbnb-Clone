@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400">
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#f9f9f9" />
+  
+  <!-- Main Title -->
+  <text x="300" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#222" text-anchor="middle">Airbnb Clone Architecture</text>
+  
+  <!-- App component -->
+  <rect x="225" y="60" width="150" height="40" fill="#FF5A5F" rx="8" />
+  <text x="300" y="85" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">App.jsx</text>
+  
+  <!-- Line connecting down to first level -->
+  <line x1="300" y1="100" x2="300" y2="140" stroke="#717171" stroke-width="2" />
+  
+  <!-- Horizontal branching line -->
+  <line x1="125" y1="140" x2="475" y2="140" stroke="#717171" stroke-width="2" />
+  
+  <!-- Branch 1: Header/Nav -->
+  <line x1="125" y1="140" x2="125" y2="170" stroke="#717171" stroke-width="2" />
+  <rect x="65" y="170" width="120" height="40" fill="#00A699" rx="6" />
+  <text x="125" y="195" font-family="Arial, sans-serif" font-size="13" fill="white" text-anchor="middle">StickyNav.jsx</text>
+  
+  <!-- Branch 2: Gallery -->
+  <line x1="241" y1="140" x2="241" y2="170" stroke="#717171" stroke-width="2" />
+  <rect x="181" y="170" width="120" height="40" fill="#00A699" rx="6" />
+  <text x="241" y="195" font-family="Arial, sans-serif" font-size="13" fill="white" text-anchor="middle">Gallery.jsx</text>
+  
+  <!-- Branch 3: Details -->
+  <line x1="358" y1="140" x2="358" y2="170" stroke="#717171" stroke-width="2" />
+  <rect x="298" y="170" width="120" height="40" fill="#00A699" rx="6" />
+  <text x="358" y="195" font-family="Arial, sans-serif" font-size="13" fill="white" text-anchor="middle">ListingDetails</text>
+  
+  <!-- Branch 4: Reviews -->
+  <line x1="475" y1="140" x2="475" y2="170" stroke="#717171" stroke-width="2" />
+  <rect x="415" y="170" width="120" height="40" fill="#00A699" rx="6" />
+  <text x="475" y="195" font-family="Arial, sans-serif" font-size="13" fill="white" text-anchor="middle">ReviewsSection</text>
+  
+  <!-- Under Details -->
+  <line x1="358" y1="210" x2="358" y2="250" stroke="#717171" stroke-width="2" />
+  <line x1="298" y1="250" x2="418" y2="250" stroke="#717171" stroke-width="2" />
+  
+  <!-- Sub-branch 1 -->
+  <line x1="298" y1="250" x2="298" y2="280" stroke="#717171" stroke-width="2" />
+  <rect x="238" y="280" width="120" height="40" fill="#FC642D" rx="6" />
+  <text x="298" y="305" font-family="Arial, sans-serif" font-size="13" fill="white" text-anchor="middle">AmenityIcons</text>
+  
+  <!-- Sub-branch 2 -->
+  <line x1="418" y1="250" x2="418" y2="280" stroke="#717171" stroke-width="2" />
+  <rect x="358" y="280" width="120" height="40" fill="#FC642D" rx="6" />
+  <text x="418" y="305" font-family="Arial, sans-serif" font-size="13" fill="white" text-anchor="middle">MapSection</text>
+</svg>
