@@ -112,7 +112,7 @@ const Gallery = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row h-[250px] sm:h-[300px] md:h-[355px] gap-2 md:rounded-xl overflow-hidden relative group -mx-5 md:mx-0">
+      <div className="flex flex-col md:flex-row h-[250px] sm:h-[300px] md:h-[465px] gap-2 md:rounded-xl overflow-hidden relative group -mx-5 md:mx-0">
         {/* Main large image */}
         <div className="w-full md:w-1/2 h-full cursor-pointer relative overflow-hidden" onClick={() => setCurrentSliderIndex(0)}>
           <img 

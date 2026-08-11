@@ -230,7 +230,7 @@ const ReviewsSection = () => {
       </div>
 
       {/* Reviews Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-7">
         {mockReviews.map((review) => (
           <div key={review.id} className="flex flex-col mb-4">
             <div className="flex items-center gap-4 mb-3">
@@ -274,7 +274,7 @@ const ReviewsSection = () => {
       {/* Footer Button */}
       <div className="mt-10">
         <button className="border border-black text-black px-6 py-3 rounded-lg font-semibold text-[16px] hover:bg-gray-50 transition cursor-pointer">
-          Show all 114 reviews
+          Show all 19 reviews
         </button>
       </div>
     </div>

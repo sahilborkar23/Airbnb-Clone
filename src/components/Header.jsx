@@ -21,8 +21,8 @@ const Header = () => {
 
         {/* Search (Desktop) */}
         <div className="hidden md:flex flex-1 justify-center">
-          <div className="flex items-center border border-gray-300 rounded-full h-12 pr-3 pl-6 shadow-[0_1px_2px_rgba(0,0,0,0.08),_0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-md transition cursor-pointer">
-            <div className="flex items-center pr-4">
+          <div className="flex items-center border border-gray-300 rounded-full h-12 pr-3 pl-8 shadow-[0_1px_2px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-md transition cursor-pointer">
+            <div className="flex items-center pr-4 gap-2">
               <img src={searchBarIcon} alt="Anywhere" className="h-[34px] w-[34px] mr-2 object-contain" />
               <span className="text-[14px] font-bold text-[#222222]">Anywhere</span>
             </div>
@@ -31,9 +31,9 @@ const Header = () => {
               <span className="text-[14px] font-bold text-[#222222]">Anytime</span>
             </div>
             <div className="w-[1px] h-6 bg-gray-300"></div>
-            <div className="flex items-center pl-4">
-              <span className="text-[14px]  mr-3 font-bold">Add guests</span>
-              <div className="bg-[#d72f4e] h-8 w-8 rounded-full flex items-center justify-center text-white">
+            <div className="flex items-center pl-4 gap-2">
+              <span className="text-[14px]  mr-3 ">Add guests</span>
+              <div className="bg-[#ff4858] h-8 w-8 rounded-full flex items-center justify-center text-white">
                 <Search size={14} strokeWidth={3} />
               </div>
             </div>
@@ -53,7 +53,7 @@ const Header = () => {
 
         {/* Right Menu */}
         <div className="hidden md:flex flex-1 justify-end items-center gap-1">
-          <a href="#" className="hidden md:block text-[14px] font-medium text-[#222222] hover:bg-gray-100 py-2 px-4 rounded-full transition mr-1">
+          <a href="#" className="hidden md:block text-[14px] font-semibold text-[#000000] hover:bg-gray-100 py-2 px-4 rounded-full transition mr-1">
             Become a host
           </a>
           <button className="w-11 h-11 flex items-center justify-center rounded-full bg-[#F7F7F7] hover:bg-gray-200 transition mx-1 cursor-pointer">

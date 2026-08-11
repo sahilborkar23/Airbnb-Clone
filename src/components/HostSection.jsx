@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, ShieldCheck, GraduationCap, Briefcase } from 'lucide-react';
+import { Star, ShieldCheck, GraduationCap, BalloonIcon } from 'lucide-react';
 import mirashyaLogo from '../assets/mirashya.jpeg';
 
 const HostSection = () => {
@@ -22,11 +22,11 @@ const HostSection = () => {
           <h2 className="text-[22px] font-semibold text-[#222222] mb-6">Meet your host</h2>
           
           {/* Main Host Card */}
-          <div className="bg-white rounded-[24px] shadow-[0_6px_16px_rgba(0,0,0,0.12)] p-8 flex items-center justify-between mb-8">
+          <div className="bg-white w-auto rounded-[24px] shadow-[0_6px_16px_rgba(0,0,0,0.12)] p-8 flex items-center justify-between mb-8">
             {/* Host Avatar & Name */}
             <div className="flex flex-col items-center text-center">
               <div className="relative mb-2">
-                <img src={mirashyaLogo} alt="Mirashya Homes" className="w-[104px] h-[104px] rounded-full object-cover" />
+                <img src={mirashyaLogo} alt="Mirashya Homes" className="w-[104px] h-26 rounded-full object-cover" />
                 <div className="absolute bottom-1 right-0 bg-[#E31C5F] text-white p-1 rounded-full border-[3px] border-white flex items-center justify-center">
                   <ShieldCheck size={16} strokeWidth={3} />
                 </div>
@@ -59,12 +59,12 @@ const HostSection = () => {
           {/* Host Info List */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3 text-[#0f0f0f]">
-              <GraduationCap size={24} strokeWidth={1.5} className="text-[#0f0f0f]" />
-              <span className="text-[16px]">Where I went to school: NICMAR GOA</span>
+              <BalloonIcon size={24} strokeWidth={1.5} className="text-[#0f0f0f]" />
+              <span className="text-[16px]">Born in the 80s</span>
             </div>
             <div className="flex items-center gap-3 text-[#0f0f0f]">
-              <Briefcase size={24} strokeWidth={1.5} className="text-[#0f0f0f]" />
-              <span className="text-[16px]">My work: Property Management</span>
+              <GraduationCap size={24} strokeWidth={1.5} className="text-[#0f0f0f]" />
+              <span className="text-[16px]">Where I went to school: NICMAR GOA</span>
             </div>
           </div>
         </div>

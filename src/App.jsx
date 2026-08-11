@@ -9,6 +9,8 @@ import StickyNav from './components/StickyNav';
 import HostSection from './components/HostSection';
 import ThingsToKnow from './components/ThingsToKnow';
 import Footer from './components/Footer';
+import MoreStays from './components/MoreStays';
+
 
 function App() {
   const [dateRange, setDateRange] = useState();
@@ -43,6 +45,7 @@ function App() {
         <div id="location"><MapSection /></div>
         <HostSection />
         <ThingsToKnow />
+        <MoreStays />
       </main>
       <Footer />
     </div>

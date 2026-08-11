@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Medal, MapPin, DoorOpen, Star, ChevronDown, Flag, UserRound, BedDouble, Wifi, Car, Tv, Utensils, Snowflake, X, Monitor, Waves, Bath, PawPrint, Video, Bell, Baby, Briefcase, Check, Coffee, Cross, Droplets, Dumbbell, Fan, FireExtinguisher, Key, Luggage, Microwave, Minus, Refrigerator, Shirt, SprayCan, Thermometer, Trees, Wind, Keyboard, Gem } from 'lucide-react';
+import { Medal, MapPin, DoorOpen, Star, ChevronDown, Flag, UserRound, BedDouble, Wifi, Car, Tv, Utensils, Snowflake, X, Monitor, Waves, Bath, PawPrint, Video, Bell, Baby, Briefcase, Check, Coffee, Cross, Droplets, Dumbbell, Fan, FireExtinguisher, Key, Luggage, Microwave, Minus, Refrigerator, Shirt, SprayCan, Thermometer, Trees, Wind, Keyboard, Gem, TagIcon, TagsIcon } from 'lucide-react';
 import {
   KitchenIcon, DedicatedWorkspaceIcon, PoolIcon, HotTubIcon, PetsIcon,
   SecurityCameraIcon, CarbonMonoxideAlarmIcon, SmokeAlarmIcon, WifiIcon, ParkingIcon,
@@ -15,10 +15,11 @@ import {
   BuildingStaffIcon, CleaningAvailableIcon, TumbleDryerIcon, EssentialsIcon
 } from '../assets/icons/AmenityIcons';
 import { format, differenceInDays } from 'date-fns';
+import { Tag } from "lucide-react";
 
 const getIconForAmenity = (name, unavailable = false) => {
   const str = name.toLowerCase();
-  
+
   if (str.includes('wifi')) return <WifiIcon />;
   if (str.includes('tv')) return <TvIcon />;
   if (str.includes('air conditioning')) return <AirConditioningIcon />;
@@ -71,7 +72,7 @@ const getIconForAmenity = (name, unavailable = false) => {
   if (str.includes('staff')) return <BuildingStaffIcon />;
   if (str.includes('essentials')) return <EssentialsIcon />;
   if (str.includes('bed')) return <BedIcon />;
-  
+
   // Generic fallback for others
   return <GenericAmenityIcon />;
 };
@@ -81,69 +82,87 @@ import sleep2 from '../assets/sleep-2.jpeg';
 import CalendarWidget from './CalendarWidget';
 const allAmenities = [
   { category: "Bathroom", items: ["Hairdryer", "Cleaning products", "Shampoo", "Hot water", "Shower gel"] },
-  { category: "Bedroom and laundry", items: [
-    "Washing machine", 
-    "Hangers", 
-    { name: "Bed linen", description: "Cotton linen" }, 
-    "Room-darkening blinds", 
-    "Iron", 
-    "Clothes drying rack", 
-    "Clothes storage: wardrobe"
-  ] },
+  {
+    category: "Bedroom and laundry", items: [
+      "Washing machine",
+      "Hangers",
+      { name: "Bed linen", description: "Cotton linen" },
+      "Room-darkening blinds",
+      "Iron",
+      "Clothes drying rack",
+      "Clothes storage: wardrobe"
+    ]
+  },
   { category: "Entertainment", items: ["TV", "Exercise equipment"] },
-  { category: "Family", items: [
-    { name: "Cot – available upon request", description: "Standard – 52 inches long x 28 inches wide (132cm x 71cm)" }
-  ] },
+  {
+    category: "Family", items: [
+      { name: "Cot – available upon request", description: "Standard – 52 inches long x 28 inches wide (132cm x 71cm)" }
+    ]
+  },
   { category: "Heating and cooling", items: ["Air conditioning", "Ceiling fan", "Heating"] },
-  { category: "Home safety", items: [
-    { name: "Exterior security cameras on property", description: "Cameras are located in the exterior area." },
-    "Fire extinguisher", 
-    "First aid kit"
-  ] },
+  {
+    category: "Home safety", items: [
+      { name: "Exterior security cameras on property", description: "Cameras are located in the exterior area." },
+      "Fire extinguisher",
+      "First aid kit"
+    ]
+  },
   { category: "Internet and office", items: ["Wifi", "Dedicated workspace"] },
-  { category: "Kitchen and dining", items: [
-    { name: "Kitchen", description: "Space where guests can cook their own meals" },
-    "Fridge", 
-    "Microwave", 
-    { name: "Cooking basics", description: "Pots and pans, oil, salt and pepper" }, 
-    { name: "Crockery and cutlery", description: "Bowls, chopsticks, plates, cups, etc." }, 
-    "Freezer", 
-    "Cooker", 
-    "Kettle", 
-    "Wine glasses", 
-    "Toaster", 
-    "Blender", 
-    "Dining table", 
-    "Coffee"
-  ] },
-  { category: "Location features", items: [
-    { name: "Private entrance", description: "Separate street or building entrance" }
-  ] },
-  { category: "Outdoor", items: [
-    { name: "Back garden", description: "An open space on the property usually covered in grass" },
-    "Outdoor dining area"
-  ] },
-  { category: "Parking and facilities", items: [
-    "Free parking on premises", 
-    "Pool", 
-    "Hot tub", 
-    { name: "Lift", description: "The home or building has a lift that’s at least 52 inches (132cm) deep and a doorway at least 32 inches (81cm) wide" }, 
-    "Shared gym in building"
-  ] },
-  { category: "Services", items: [
-    { name: "Pets allowed", description: "Assistance animals are always allowed" }, 
-    { name: "Luggage drop-off allowed", description: "For guests' convenience when they are arriving early or departing late" }, 
-    { name: "Long-term stays allowed", description: "Allow stays of 28 days or more" }, 
-    "Self check-in", 
-    { name: "Building staff", description: "Someone is available 24 hours a day to let guests in" }, 
-    "Cleaning available during stay"
-  ] },
-  { category: "Not included", items: [
-    "Tumble dryer", 
-    "Essentials", 
-    { name: "Smoke alarm", description: "This place may not have a smoke detector. Contact the host with any questions." }, 
-    { name: "Carbon monoxide alarm", description: "This place may not have a carbon monoxide detector. Contact the host with any questions." }
-  ], unavailable: true }
+  {
+    category: "Kitchen and dining", items: [
+      { name: "Kitchen", description: "Space where guests can cook their own meals" },
+      "Fridge",
+      "Microwave",
+      { name: "Cooking basics", description: "Pots and pans, oil, salt and pepper" },
+      { name: "Crockery and cutlery", description: "Bowls, chopsticks, plates, cups, etc." },
+      "Freezer",
+      "Cooker",
+      "Kettle",
+      "Wine glasses",
+      "Toaster",
+      "Blender",
+      "Dining table",
+      "Coffee"
+    ]
+  },
+  {
+    category: "Location features", items: [
+      { name: "Private entrance", description: "Separate street or building entrance" }
+    ]
+  },
+  {
+    category: "Outdoor", items: [
+      { name: "Back garden", description: "An open space on the property usually covered in grass" },
+      "Outdoor dining area"
+    ]
+  },
+  {
+    category: "Parking and facilities", items: [
+      "Free parking on premises",
+      "Pool",
+      "Hot tub",
+      { name: "Lift", description: "The home or building has a lift that’s at least 52 inches (132cm) deep and a doorway at least 32 inches (81cm) wide" },
+      "Shared gym in building"
+    ]
+  },
+  {
+    category: "Services", items: [
+      { name: "Pets allowed", description: "Assistance animals are always allowed" },
+      { name: "Luggage drop-off allowed", description: "For guests' convenience when they are arriving early or departing late" },
+      { name: "Long-term stays allowed", description: "Allow stays of 28 days or more" },
+      "Self check-in",
+      { name: "Building staff", description: "Someone is available 24 hours a day to let guests in" },
+      "Cleaning available during stay"
+    ]
+  },
+  {
+    category: "Not included", items: [
+      "Tumble dryer",
+      "Essentials",
+      { name: "Smoke alarm", description: "This place may not have a smoke detector. Contact the host with any questions." },
+      { name: "Carbon monoxide alarm", description: "This place may not have a carbon monoxide detector. Contact the host with any questions." }
+    ], unavailable: true
+  }
 ];
 
 const ListingDetails = ({ dateRange, setDateRange, guests, setGuests, nights, pricePerNight, totalPrice }) => {
@@ -188,15 +207,15 @@ const ListingDetails = ({ dateRange, setDateRange, guests, setGuests, nights, pr
       document.body.style.paddingRight = '0px';
       document.body.style.overflow = 'unset';
     }
-    return () => { 
+    return () => {
       document.body.style.paddingRight = '0px';
-      document.body.style.overflow = 'unset'; 
+      document.body.style.overflow = 'unset';
     };
   }, [showAmenities, showAboutModal]);
 
   return (
     <div className="max-w-[1280px] mx-auto px-5 md:px-20 pt-6 pb-12 flex flex-col md:flex-row gap-10 lg:gap-20">
-      
+
       {/* Left Column */}
       <div className="w-full md:w-[60%] lg:w-[65%]">
         <div className="">
@@ -232,7 +251,7 @@ const ListingDetails = ({ dateRange, setDateRange, guests, setGuests, nights, pr
               </defs>
             </svg>
             <div className="text-[15px] font-bold text-[#222222] text-center leading-[1.15]">
-              Guest<br/>favourite
+              Guest<br />favourite
             </div>
             {/* Right wreath SVG */}
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 32" fill="none" height="48">
@@ -254,7 +273,7 @@ const ListingDetails = ({ dateRange, setDateRange, guests, setGuests, nights, pr
               </defs>
             </svg>
           </div>
-          
+
           {/* Middle: Text */}
           <div className="text-[15px] ml-5 font-bold text-[#222222] max-w-[300px] leading-[1.35]">
             One of the most loved homes on Airbnb, according to guests
@@ -407,19 +426,19 @@ const ListingDetails = ({ dateRange, setDateRange, guests, setGuests, nights, pr
               <span className="text-[16px] line-through text-gray-400">Smoke alarm</span>
             </div>
           </div>
-          <button 
+          <button
             className="mt-5 bg-gray-200 hover:bg-gray-100 text-[#303030] font-bold text-[16px] px-6 py-3 rounded-lg transition cursor-pointer"
             onClick={() => setShowAmenities(true)}
           >
             Show all 50 amenities
           </button>
         </div>
-        
+
         {/* Calendar Section */}
         <div className="py-12">
           <h2 className="text-[22px] font-semibold text-[#222222]">{title}</h2>
           <div className="text-[14px] text-gray-500 mb-6 mt-1">{subtitle}</div>
-          
+
           <div className="flex w-full overflow-hidden">
             <CalendarWidget range={dateRange} setRange={setDateRange} />
           </div>
@@ -428,7 +447,7 @@ const ListingDetails = ({ dateRange, setDateRange, guests, setGuests, nights, pr
             <button className="p-2 hover:bg-gray-100 rounded-full transition -ml-2 cursor-pointer">
               <Keyboard size={24} strokeWidth={1.5} />
             </button>
-            <button 
+            <button
               onClick={() => setDateRange(undefined)}
               className="underline font-semibold text-[14px] hover:bg-gray-100 p-2 rounded-lg transition -mr-2 cursor-pointer"
             >
@@ -441,7 +460,31 @@ const ListingDetails = ({ dateRange, setDateRange, guests, setGuests, nights, pr
       {/* Right Column - Booking Widget */}
       <div className="w-full md:w-[40%] lg:w-[37%] relative">
         <div className="sticky top-24">
-          
+
+          {/* claim discount */}
+          <div className="bg-white border border-gray-200 rounded-2xl shadow-[0_6px_16px_rgba(0,0,0,0.12)] p-2 md:px-4 flex items-center justify-center gap-2 mb-4">
+            <div className="flex items-center gap-3 min-w-0">
+              <TagsIcon size={22} strokeWidth={1.8} className="shrink-0 text-[#222222]" />
+
+              <p className="text-[14px] leading-5 text-[#222222]">
+                Get 10% off your next stay.{" "}
+                <a
+                  href="airbnb://discount-terms"
+                  className="font-semibold underline"
+                >
+                  Terms apply
+                </a>
+              </p>
+            </div>
+
+            <button
+              type="button"
+              className="shrink-0 rounded-md bg-[#e8e8e8] px-4 py-2 text-[14px] font-semibold text-[#222222] hover:bg-[#dddddd]"
+            >
+              Claim
+            </button>
+          </div>
+
           {/* Rare Find Banner */}
           <div className="bg-white border border-gray-200 rounded-2xl shadow-[0_6px_16px_rgba(0,0,0,0.12)] p-2 md:px-4 flex items-center justify-center gap-2 mb-4">
             <Gem className="text-[#FF385C] min-w-[22px]" size={24} fill="#FF385C" strokeWidth={1} />
@@ -464,175 +507,186 @@ const ListingDetails = ({ dateRange, setDateRange, guests, setGuests, nights, pr
               </div>
             )}
 
-          <div className="border border-gray-400 rounded-xl mb-4 mx-2">
-            <div className="flex w-full border-b border-gray-400">
-              <div className="w-1/2 p-3 border-r border-gray-400 cursor-pointer hover:bg-gray-50 transition rounded-tl-xl">
-                <div className="text-[11px] font-extrabold uppercase ">Check-in</div>
-                <div className={`text-[14px] ${dateRange?.from ? 'text-[#222222]' : 'text-[#717171]'}`}>
-                  {dateRange?.from ? format(dateRange.from, 'dd/MM/yyyy') : 'Add date'}
+            <div className="border border-gray-400 rounded-xl mb-4 mx-2">
+              <div className="flex w-full border-b border-gray-400">
+                <div className="w-1/2 p-3 border-r border-gray-400 cursor-pointer hover:bg-gray-50 transition rounded-tl-xl">
+                  <div className="text-[11px] font-extrabold uppercase ">Check-in</div>
+                  <div className={`text-[14px] ${dateRange?.from ? 'text-[#222222]' : 'text-[#717171]'}`}>
+                    {dateRange?.from ? format(dateRange.from, 'dd/MM/yyyy') : 'Add date'}
+                  </div>
+                </div>
+                <div className="w-1/2 p-3 cursor-pointer hover:bg-gray-50 transition rounded-tr-xl">
+                  <div className="text-[11px] font-extrabold uppercase ">Checkout</div>
+                  <div className={`text-[14px] ${dateRange?.to ? 'text-[#222222]' : 'text-[#717171]'}`}>
+                    {dateRange?.to ? format(dateRange.to, 'dd/MM/yyyy') : 'Add date'}
+                  </div>
                 </div>
               </div>
-              <div className="w-1/2 p-3 cursor-pointer hover:bg-gray-50 transition rounded-tr-xl">
-                <div className="text-[11px] font-extrabold uppercase ">Checkout</div>
-                <div className={`text-[14px] ${dateRange?.to ? 'text-[#222222]' : 'text-[#717171]'}`}>
-                  {dateRange?.to ? format(dateRange.to, 'dd/MM/yyyy') : 'Add date'}
+              <div className="w-full relative">
+                <div
+                  onClick={() => setShowGuestsDropdown(!showGuestsDropdown)}
+                  className="w-full p-3 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition rounded-b-xl"
+                >
+                  <div>
+                    <div className="text-[11px] font-extrabold uppercase">Guests</div>
+                    <div className="text-[14px] text-[#222222]">{formatGuestLabel()}</div>
+                  </div>
+                  <ChevronDown size={20} className={`text-[#222222] transition-transform ${showGuestsDropdown ? 'rotate-180' : ''}`} />
                 </div>
+
+                {/* Guest Dropdown Modal */}
+                <AnimatePresence>
+                  {showGuestsDropdown && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-xl shadow-lg mt-2 p-4 z-50 flex flex-col gap-6"
+                    >
+                      {/* Adults */}
+                      <div className="flex justify-between items-center">
+                        <div className="flex flex-col">
+                          <span className="text-[16px] font-semibold text-[#222222]">Adults</span>
+                          <span className="text-[14px] text-[#717171]">Age 13+</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => updateGuest('adults', -1)}
+                            disabled={guests.adults <= 1}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
+                          >
+                            <Minus size={16} />
+                          </button>
+                          <span className="text-[16px] w-4 text-center">{guests.adults}</span>
+                          <button
+                            onClick={() => updateGuest('adults', 1)}
+                            disabled={totalGuests >= maxGuests}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
+                          >
+                            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style={{ display: 'block', fill: 'none', height: '12px', width: '12px', stroke: 'currentcolor', strokeWidth: '5.33333', overflow: 'visible' }}><path d="m2 16h28"></path><path d="m16 2v28"></path></svg>
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Children */}
+                      <div className="flex justify-between items-center">
+                        <div className="flex flex-col">
+                          <span className="text-[16px] font-semibold text-[#222222]">Children</span>
+                          <span className="text-[14px] text-[#717171]">Ages 2–12</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => updateGuest('children', -1)}
+                            disabled={guests.children <= 0}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
+                          >
+                            <Minus size={16} />
+                          </button>
+                          <span className="text-[16px] w-4 text-center">{guests.children}</span>
+                          <button
+                            onClick={() => updateGuest('children', 1)}
+                            disabled={totalGuests >= maxGuests}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
+                          >
+                            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style={{ display: 'block', fill: 'none', height: '12px', width: '12px', stroke: 'currentcolor', strokeWidth: '5.33333', overflow: 'visible' }}><path d="m2 16h28"></path><path d="m16 2v28"></path></svg>
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Infants */}
+                      <div className="flex justify-between items-center">
+                        <div className="flex flex-col">
+                          <span className="text-[16px] font-semibold text-[#222222]">Infants</span>
+                          <span className="text-[14px] text-[#717171]">Under 2</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => updateGuest('infants', -1)}
+                            disabled={guests.infants <= 0}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
+                          >
+                            <Minus size={16} />
+                          </button>
+                          <span className="text-[16px] w-4 text-center">{guests.infants}</span>
+                          <button
+                            onClick={() => updateGuest('infants', 1)}
+                            disabled={guests.infants >= 5}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
+                          >
+                            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style={{ display: 'block', fill: 'none', height: '12px', width: '12px', stroke: 'currentcolor', strokeWidth: '5.33333', overflow: 'visible' }}><path d="m2 16h28"></path><path d="m16 2v28"></path></svg>
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Pets */}
+                      <div className="flex justify-between items-center">
+                        <div className="flex flex-col">
+                          <span className="text-[16px] font-semibold text-[#222222]">Pets</span>
+                          <span className="text-[14px] text-[#222222] underline cursor-pointer font-medium hover:text-[#000]">Bringing a service animal?</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => updateGuest('pets', -1)}
+                            disabled={guests.pets <= 0}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
+                          >
+                            <Minus size={16} />
+                          </button>
+                          <span className="text-[16px] w-4 text-center">{guests.pets}</span>
+                          <button
+                            onClick={() => updateGuest('pets', 1)}
+                            disabled={guests.pets >= 5}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
+                          >
+                            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style={{ display: 'block', fill: 'none', height: '12px', width: '12px', stroke: 'currentcolor', strokeWidth: '5.33333', overflow: 'visible' }}><path d="m2 16h28"></path><path d="m16 2v28"></path></svg>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="text-[12px] text-[#717171] mt-2">
+                        This place has a maximum of {maxGuests} guests, not including infants. If you're bringing more than 2 pets, please let your host know.
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
-            <div className="w-full relative">
-              <div 
-                onClick={() => setShowGuestsDropdown(!showGuestsDropdown)}
-                className="w-full p-3 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition rounded-b-xl"
-              >
-                <div>
-                  <div className="text-[11px] font-extrabold uppercase">Guests</div>
-                  <div className="text-[14px] text-[#222222]">{formatGuestLabel()}</div>
-                </div>
-                <ChevronDown size={20} className={`text-[#222222] transition-transform ${showGuestsDropdown ? 'rotate-180' : ''}`} />
-              </div>
 
-              {/* Guest Dropdown Modal */}
-              <AnimatePresence>
-                {showGuestsDropdown && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-xl shadow-lg mt-2 p-4 z-50 flex flex-col gap-6"
-                  >
-                    {/* Adults */}
-                    <div className="flex justify-between items-center">
-                      <div className="flex flex-col">
-                        <span className="text-[16px] font-semibold text-[#222222]">Adults</span>
-                        <span className="text-[14px] text-[#717171]">Age 13+</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <button 
-                          onClick={() => updateGuest('adults', -1)}
-                          disabled={guests.adults <= 1}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
-                        >
-                          <Minus size={16} />
-                        </button>
-                        <span className="text-[16px] w-4 text-center">{guests.adults}</span>
-                        <button 
-                          onClick={() => updateGuest('adults', 1)}
-                          disabled={totalGuests >= maxGuests}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
-                        >
-                          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style={{display: 'block', fill: 'none', height: '12px', width: '12px', stroke: 'currentcolor', strokeWidth: '5.33333', overflow: 'visible'}}><path d="m2 16h28"></path><path d="m16 2v28"></path></svg>
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Children */}
-                    <div className="flex justify-between items-center">
-                      <div className="flex flex-col">
-                        <span className="text-[16px] font-semibold text-[#222222]">Children</span>
-                        <span className="text-[14px] text-[#717171]">Ages 2–12</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <button 
-                          onClick={() => updateGuest('children', -1)}
-                          disabled={guests.children <= 0}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
-                        >
-                          <Minus size={16} />
-                        </button>
-                        <span className="text-[16px] w-4 text-center">{guests.children}</span>
-                        <button 
-                          onClick={() => updateGuest('children', 1)}
-                          disabled={totalGuests >= maxGuests}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
-                        >
-                          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style={{display: 'block', fill: 'none', height: '12px', width: '12px', stroke: 'currentcolor', strokeWidth: '5.33333', overflow: 'visible'}}><path d="m2 16h28"></path><path d="m16 2v28"></path></svg>
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Infants */}
-                    <div className="flex justify-between items-center">
-                      <div className="flex flex-col">
-                        <span className="text-[16px] font-semibold text-[#222222]">Infants</span>
-                        <span className="text-[14px] text-[#717171]">Under 2</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <button 
-                          onClick={() => updateGuest('infants', -1)}
-                          disabled={guests.infants <= 0}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
-                        >
-                          <Minus size={16} />
-                        </button>
-                        <span className="text-[16px] w-4 text-center">{guests.infants}</span>
-                        <button 
-                          onClick={() => updateGuest('infants', 1)}
-                          disabled={guests.infants >= 5}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
-                        >
-                          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style={{display: 'block', fill: 'none', height: '12px', width: '12px', stroke: 'currentcolor', strokeWidth: '5.33333', overflow: 'visible'}}><path d="m2 16h28"></path><path d="m16 2v28"></path></svg>
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Pets */}
-                    <div className="flex justify-between items-center">
-                      <div className="flex flex-col">
-                        <span className="text-[16px] font-semibold text-[#222222]">Pets</span>
-                        <span className="text-[14px] text-[#222222] underline cursor-pointer font-medium hover:text-[#000]">Bringing a service animal?</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <button 
-                          onClick={() => updateGuest('pets', -1)}
-                          disabled={guests.pets <= 0}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
-                        >
-                          <Minus size={16} />
-                        </button>
-                        <span className="text-[16px] w-4 text-center">{guests.pets}</span>
-                        <button 
-                          onClick={() => updateGuest('pets', 1)}
-                          disabled={guests.pets >= 5}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gray-500 disabled:opacity-30 disabled:hover:border-gray-300 disabled:cursor-not-allowed cursor-pointer transition"
-                        >
-                          <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false" style={{display: 'block', fill: 'none', height: '12px', width: '12px', stroke: 'currentcolor', strokeWidth: '5.33333', overflow: 'visible'}}><path d="m2 16h28"></path><path d="m16 2v28"></path></svg>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="text-[12px] text-[#717171] mt-2">
-                      This place has a maximum of {maxGuests} guests, not including infants. If you're bringing more than 2 pets, please let your host know.
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            <div className="bg-gray-100 rounded-xl mb-5 px-3 py-2">
+              <p className="text-[14px] text-[#717171] text-center flex items-center justify-center">
+                Free cancellation before&nbsp;
+                <span className="font-semibold text-[#222222]">17 October</span>
+              </p>
             </div>
-          </div>
 
-          <button className="w-full text-white py-3 rounded-full text-[16px] font-semibold transition bg-gradient-to-r from-[#E61E4D] via-[#E31C5F] to-[#D70466] hover:from-[#D70466] hover:via-[#D70466] hover:to-[#C90060] active:scale-[0.99]">
-            Check availability
-          </button>
+            <button className="w-full text-white py-3 rounded-full text-[16px] font-semibold transition bg-gradient-to-r from-[#E61E4D] via-[#E31C5F] to-[#D70466] hover:from-[#D70466] hover:via-[#D70466] hover:to-[#C90060] active:scale-[0.99]">
+              Check availability
+            </button>
+
+            <p className="text-[14px] text-[#717171] mt-2 text-center gap-0.5 flex items-center justify-center">
+              You won't be charged yet
+            </p>
 
           </div>
           <div className="flex justify-center mt-4">
-              <button className="flex items-center gap-1.5 text-[14px] font-semibold text-[#454545] underline transition cursor-pointer">
-                <Flag size={13} />
-                Report this listing
-              </button>
+            <button className="flex items-center gap-1.5 text-[14px] font-semibold text-[#454545] underline transition cursor-pointer">
+              <Flag size={13} />
+              Report this listing
+            </button>
           </div>
         </div>
       </div>
-      
+
       {/* About This Space Modal */}
       <AnimatePresence>
         {showAboutModal && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50" 
+            className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50"
             onClick={() => setShowAboutModal(false)}
           >
             <motion.div
@@ -643,118 +697,118 @@ const ListingDetails = ({ dateRange, setDateRange, guests, setGuests, nights, pr
               className="bg-white w-full h-[100dvh] md:h-[88vh] md:max-w-[800px] md:rounded-2xl flex flex-col shadow-xl"
               onClick={(e) => e.stopPropagation()}
             >
-            {/* Modal Header */}
-            <div className="flex items-center px-6 py-4 border-b border-gray-200 shrink-0">
-              <button
-                onClick={() => setShowAboutModal(false)}
-                className="p-2 hover:bg-gray-100 rounded-full transition -ml-2 cursor-pointer"
-              >
-                <X size={20} />
-              </button>
-            </div>
+              {/* Modal Header */}
+              <div className="flex items-center px-6 py-4 border-b border-gray-200 shrink-0">
+                <button
+                  onClick={() => setShowAboutModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-full transition -ml-2 cursor-pointer"
+                >
+                  <X size={20} />
+                </button>
+              </div>
 
-            {/* Modal Body */}
-            <div className="px-8 py-6 overflow-y-auto custom-scrollbar flex-1">
-              <h2 className="text-[26px] font-bold text-[#222222] mb-6">About this space</h2>
+              {/* Modal Body */}
+              <div className="px-8 py-6 overflow-y-auto custom-scrollbar flex-1">
+                <h2 className="text-[26px] font-bold text-[#222222] mb-6">About this space</h2>
 
-              <div className="text-[16px] text-[#222222] leading-[1.7] flex flex-col gap-5">
-                <p>
-                  🌴 Plan Your Relaxing Holiday at Amor De Goa by Mirashya Homes! ✨ Stay in this cozy 1BHK in the heart of Candolim, featuring a private jacuzzi 🛁 for the perfect unwind. Enjoy high-speed WiFi 💻, Smart TV 📺, pet-friendly comfort 🐾, and stylish interiors. Just minutes from Candolim Beach 🏖️, popular cafés, restaurants, and nightlife 🍹, it's ideal for couples seeking romance, relaxation, and a touch of luxury in North Goa. ❤️🌴
-                </p>
+                <div className="text-[16px] text-[#222222] leading-[1.7] flex flex-col gap-5">
+                  <p>
+                    🌴 Plan Your Relaxing Holiday at Amor De Goa by Mirashya Homes! ✨ Stay in this cozy 1BHK in the heart of Candolim, featuring a private jacuzzi 🛁 for the perfect unwind. Enjoy high-speed WiFi 💻, Smart TV 📺, pet-friendly comfort 🐾, and stylish interiors. Just minutes from Candolim Beach 🏖️, popular cafés, restaurants, and nightlife 🍹, it's ideal for couples seeking romance, relaxation, and a touch of luxury in North Goa. ❤️🌴
+                  </p>
 
-                <div>
-                  <p className="font-semibold text-[17px] mb-2">The space</p>
-                  <p>Escape to Amor de Goa by Mirashya Homes, a serene 1BHK retreat in the heart of Candolim—perfect for couples, families, solo travelers, and work-from-anywhere stays. Thoughtfully designed with modern comforts and a touch of Goan charm, this space blends relaxation with convenience.</p>
-                </div>
+                  <div>
+                    <p className="font-semibold text-[17px] mb-2">The space</p>
+                    <p>Escape to Amor de Goa by Mirashya Homes, a serene 1BHK retreat in the heart of Candolim—perfect for couples, families, solo travelers, and work-from-anywhere stays. Thoughtfully designed with modern comforts and a touch of Goan charm, this space blends relaxation with convenience.</p>
+                  </div>
 
-                <div>
-                  <p className="font-semibold mb-1">🛁 Highlights You'll Love</p>
-                  <ul className="list-none flex flex-col gap-0.5">
-                    <li>• Private Jacuzzi for a relaxing unwind</li>
-                    <li>• Cozy, stylish living space with modern interiors</li>
-                    <li>• Private balcony for peaceful mornings &amp; evenings</li>
-                    <li>• Access to a tranquil shared swimming pool</li>
-                  </ul>
-                </div>
+                  <div>
+                    <p className="font-semibold mb-1">🛁 Highlights You'll Love</p>
+                    <ul className="list-none flex flex-col gap-0.5">
+                      <li>• Private Jacuzzi for a relaxing unwind</li>
+                      <li>• Cozy, stylish living space with modern interiors</li>
+                      <li>• Private balcony for peaceful mornings &amp; evenings</li>
+                      <li>• Access to a tranquil shared swimming pool</li>
+                    </ul>
+                  </div>
 
-                <div>
-                  <p className="font-semibold mb-1">🛏️ Comfort &amp; Living</p>
-                  <ul className="list-none flex flex-col gap-0.5">
-                    <li>• Plush bedroom for restful sleep</li>
-                    <li>• Bright, well-designed living area</li>
-                    <li>• Clean bathroom with essential toiletries</li>
-                  </ul>
-                </div>
+                  <div>
+                    <p className="font-semibold mb-1">🛏️ Comfort &amp; Living</p>
+                    <ul className="list-none flex flex-col gap-0.5">
+                      <li>• Plush bedroom for restful sleep</li>
+                      <li>• Bright, well-designed living area</li>
+                      <li>• Clean bathroom with essential toiletries</li>
+                    </ul>
+                  </div>
 
-                <div>
-                  <p className="font-semibold mb-1">🍳 Fully Equipped Kitchen</p>
-                  <p>Cook with ease—includes cookware, utensils &amp; appliances for short or long stays</p>
-                </div>
+                  <div>
+                    <p className="font-semibold mb-1">🍳 Fully Equipped Kitchen</p>
+                    <p>Cook with ease—includes cookware, utensils &amp; appliances for short or long stays</p>
+                  </div>
 
-                <div>
-                  <p className="font-semibold mb-1">📍 Prime Location – Candolim</p>
-                  <ul className="list-none flex flex-col gap-0.5">
-                    <li>• 10 mins to Candolim Beach</li>
-                    <li>• Easy access to Baga, Calangute, Sinquerim &amp; Fort Aguada</li>
-                    <li>• Surrounded by cafés, restaurants, bars &amp; supermarkets</li>
-                    <li>• ~35–40 mins from MOPA Airport</li>
-                  </ul>
-                </div>
+                  <div>
+                    <p className="font-semibold mb-1">📍 Prime Location – Candolim</p>
+                    <ul className="list-none flex flex-col gap-0.5">
+                      <li>• 10 mins to Candolim Beach</li>
+                      <li>• Easy access to Baga, Calangute, Sinquerim &amp; Fort Aguada</li>
+                      <li>• Surrounded by cafés, restaurants, bars &amp; supermarkets</li>
+                      <li>• ~35–40 mins from MOPA Airport</li>
+                    </ul>
+                  </div>
 
-                <div>
-                  <p className="font-semibold mb-1">✨ Amenities for a Perfect Stay</p>
-                  <ul className="list-none flex flex-col gap-0.5">
-                    <li>• High-speed Wi-Fi + dedicated workspace (WFH ready)</li>
-                    <li>• Smart TV with streaming apps</li>
-                    <li>• Housekeeping support</li>
-                    <li>• Free parking</li>
-                    <li>• Secure gated community with caretaker</li>
-                    <li>• Pet-friendly 🐾</li>
-                  </ul>
-                </div>
+                  <div>
+                    <p className="font-semibold mb-1">✨ Amenities for a Perfect Stay</p>
+                    <ul className="list-none flex flex-col gap-0.5">
+                      <li>• High-speed Wi-Fi + dedicated workspace (WFH ready)</li>
+                      <li>• Smart TV with streaming apps</li>
+                      <li>• Housekeeping support</li>
+                      <li>• Free parking</li>
+                      <li>• Secure gated community with caretaker</li>
+                      <li>• Pet-friendly 🐾</li>
+                    </ul>
+                  </div>
 
-                <div>
-                  <p className="font-semibold mb-1">🌴 Ideal For</p>
-                  <ul className="list-none flex flex-col gap-0.5">
-                    <li>• Romantic getaways</li>
-                    <li>• Family vacations</li>
-                    <li>• Workations</li>
-                    <li>• Peaceful staycations</li>
-                  </ul>
-                </div>
+                  <div>
+                    <p className="font-semibold mb-1">🌴 Ideal For</p>
+                    <ul className="list-none flex flex-col gap-0.5">
+                      <li>• Romantic getaways</li>
+                      <li>• Family vacations</li>
+                      <li>• Workations</li>
+                      <li>• Peaceful staycations</li>
+                    </ul>
+                  </div>
 
-                <div>
-                  <p className="font-semibold mb-1">🌟 Experience Goa, the Right Way</p>
-                  <p>Whether you're here to explore or simply unwind, Amor de Goa offers the perfect mix of comfort, location, and tranquility.</p>
-                </div>
+                  <div>
+                    <p className="font-semibold mb-1">🌟 Experience Goa, the Right Way</p>
+                    <p>Whether you're here to explore or simply unwind, Amor de Goa offers the perfect mix of comfort, location, and tranquility.</p>
+                  </div>
 
-                <p>📅 Book your Goa escape now—dates fill fast!</p>
-                <p>Warm regards,<br />Team Mirashya Homes</p>
+                  <p>📅 Book your Goa escape now—dates fill fast!</p>
+                  <p>Warm regards,<br />Team Mirashya Homes</p>
 
-                <hr className="border-gray-200" />
+                  <hr className="border-gray-200" />
 
-                <div>
-                  <p className="font-semibold text-[17px] mb-2">Guest access</p>
-                  <p>Guests have access to all the amenities of the apartment including the room and the common areas like gym, parking area and swimming pool.</p>
-                </div>
+                  <div>
+                    <p className="font-semibold text-[17px] mb-2">Guest access</p>
+                    <p>Guests have access to all the amenities of the apartment including the room and the common areas like gym, parking area and swimming pool.</p>
+                  </div>
 
-                <div>
-                  <p className="font-semibold text-[17px] mb-2">Other things to note</p>
-                  <div className="flex flex-col gap-2">
-                    <p>Our property is Vastu compliant and has been professionally verified by a certified Vastu consultant.</p>
-                    <p>- Guest capacity should be respected. Unaccounted guests are not allowed.</p>
-                    <p>- Pool timings are 9 am to 7 pm. No eating/drinking/smoking near the pool area.</p>
-                    <p>- The apartment has an inverter backup in case of any occasional power outages that occur in Goa.</p>
-                    <p>- Being located in a gated community, we don't allow loud music in the property.</p>
-                    <p>- Early check-ins/Late checkouts are subject to availability and will be charged additionally. Late checkout is permitted only with prior approval.</p>
-                    <p>- Linen (bed linen &amp; towels) will be changed every 3 days. Requests for the linen and towels to be changed daily will be chargeable.</p>
-                    <p>- We provide soap, shower gel and shampoo in all properties; other amenities like dental kits, shaving kits etc are all on request.</p>
-                    <p>- Check-in and Luggage assistance to be provided.</p>
-                    <p>- Housekeeping Staff will be available between 9 am to 6 pm.</p>
+                  <div>
+                    <p className="font-semibold text-[17px] mb-2">Other things to note</p>
+                    <div className="flex flex-col gap-2">
+                      <p>Our property is Vastu compliant and has been professionally verified by a certified Vastu consultant.</p>
+                      <p>- Guest capacity should be respected. Unaccounted guests are not allowed.</p>
+                      <p>- Pool timings are 9 am to 7 pm. No eating/drinking/smoking near the pool area.</p>
+                      <p>- The apartment has an inverter backup in case of any occasional power outages that occur in Goa.</p>
+                      <p>- Being located in a gated community, we don't allow loud music in the property.</p>
+                      <p>- Early check-ins/Late checkouts are subject to availability and will be charged additionally. Late checkout is permitted only with prior approval.</p>
+                      <p>- Linen (bed linen &amp; towels) will be changed every 3 days. Requests for the linen and towels to be changed daily will be chargeable.</p>
+                      <p>- We provide soap, shower gel and shampoo in all properties; other amenities like dental kits, shaving kits etc are all on request.</p>
+                      <p>- Check-in and Luggage assistance to be provided.</p>
+                      <p>- Housekeeping Staff will be available between 9 am to 6 pm.</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
             </motion.div>
           </motion.div>
         )}
@@ -763,15 +817,15 @@ const ListingDetails = ({ dateRange, setDateRange, guests, setGuests, nights, pr
       {/* Amenities Modal */}
       <AnimatePresence>
         {showAmenities && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50" 
+            className="fixed inset-0 z-[999] flex items-center justify-center bg-black/50"
             onClick={() => setShowAmenities(false)}
           >
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 40, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.98 }}
@@ -779,42 +833,42 @@ const ListingDetails = ({ dateRange, setDateRange, guests, setGuests, nights, pr
               className="bg-white w-full h-[100dvh] md:h-[90vh] md:max-w-[800px] md:rounded-2xl flex flex-col shadow-xl"
               onClick={(e) => e.stopPropagation()}
             >
-            <div className="flex items-center p-6 pb-2">
-              <button 
-                onClick={() => setShowAmenities(false)}
-                className="p-2 hover:bg-gray-100 rounded-full transition -ml-2 cursor-pointer"
-              >
-                <X size={20} />
-              </button>
-            </div>
-            <div className="p-6 md:px-8 overflow-y-auto custom-scrollbar flex-1">
-              <h2 className="text-[26px] md:text-[28px] font-bold text-[#222222] mb-8">What this place offers</h2>
-              {allAmenities.map((group, idx) => (
-                <div key={idx} className="mb-8">
-                  <h3 className="text-[18px] font-semibold text-[#222222] mb-2">{group.category}</h3>
-                  <div className="flex flex-col">
-                    {group.items.map((item, itemIdx) => {
-                      const itemName = typeof item === 'object' ? item.name : item;
-                      const itemDesc = typeof item === 'object' ? item.description : null;
-                      return (
-                        <div 
-                          key={itemIdx} 
-                          className={`flex items-center gap-4 py-5 border-b border-gray-200 text-[16px] ${group.unavailable ? 'text-[#717171]' : 'text-[#222222]'}`}
-                        >
-                          <div className={group.unavailable ? 'text-[#717171]' : 'text-[#222222]'}>
-                             {getIconForAmenity(itemName, group.unavailable)}
+              <div className="flex items-center p-6 pb-2">
+                <button
+                  onClick={() => setShowAmenities(false)}
+                  className="p-2 hover:bg-gray-100 rounded-full transition -ml-2 cursor-pointer"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              <div className="p-6 md:px-8 overflow-y-auto custom-scrollbar flex-1">
+                <h2 className="text-[26px] md:text-[28px] font-bold text-[#222222] mb-8">What this place offers</h2>
+                {allAmenities.map((group, idx) => (
+                  <div key={idx} className="mb-8">
+                    <h3 className="text-[18px] font-semibold text-[#222222] mb-2">{group.category}</h3>
+                    <div className="flex flex-col">
+                      {group.items.map((item, itemIdx) => {
+                        const itemName = typeof item === 'object' ? item.name : item;
+                        const itemDesc = typeof item === 'object' ? item.description : null;
+                        return (
+                          <div
+                            key={itemIdx}
+                            className={`flex items-center gap-4 py-5 border-b border-gray-200 text-[16px] ${group.unavailable ? 'text-[#717171]' : 'text-[#222222]'}`}
+                          >
+                            <div className={group.unavailable ? 'text-[#717171]' : 'text-[#222222]'}>
+                              {getIconForAmenity(itemName, group.unavailable)}
+                            </div>
+                            <div className="flex flex-col">
+                              <span className={group.unavailable ? 'line-through text-[#717171]' : 'text-[#222222]'}>{itemName}</span>
+                              {itemDesc && <span className="text-[14px] text-[#717171] leading-5">{itemDesc}</span>}
+                            </div>
                           </div>
-                          <div className="flex flex-col">
-                            <span className={group.unavailable ? 'line-through text-[#717171]' : 'text-[#222222]'}>{itemName}</span>
-                            {itemDesc && <span className="text-[14px] text-[#717171] leading-5">{itemDesc}</span>}
-                          </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
             </motion.div>
           </motion.div>
         )}

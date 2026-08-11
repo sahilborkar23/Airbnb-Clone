@@ -2,7 +2,7 @@ import React from 'react';
 
 const ThingsToKnow = () => {
   return (
-    <div className="max-w-[1280px] mx-auto px-5 md:px-20 py-12 border-t border-gray-200">
+    <div className="max-w-[1280px] mx-auto px-5 md:px-20 py-9 border-t border-gray-200">
       <h2 className="text-[22px] font-bold tracking-tight text-[#222222] mb-6">Things to know</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-[60px] text-[#222222]">
@@ -15,12 +15,12 @@ const ThingsToKnow = () => {
             </svg>
           </div>
           <h3 className="font-semibold text-[16px]">Cancellation policy</h3>
-          <p className="text-[14px] text-[#717171] leading-[15px]">
+          <p className="text-[14px] text-[#717171] leading-7 font-normal mt-1 mb-2">
             Free cancellation before 26 July. Cancel before
             check-in on 27 July for a partial refund.<br />
             Review this host’s full policy for details.
           </p>
-          <a href="#" className="text-[14px] underline font-semibold text-[#717171] decoration-[#717171]">Learn more</a>
+          <a href="#" className="text-[14px] underline font-semibold text-[#000000] decoration-[#717171]">Learn more</a>
         </div>
 
         {/* House rules */}
@@ -31,12 +31,12 @@ const ThingsToKnow = () => {
             </svg>
           </div>
           <h3 className="font-semibold text-[16px]">House rules</h3>
-          <ul className="text-[14px] text-[#717171] leading-[15px] flex flex-col">
+          <ul className="text-[14px] text-[#717171] leading-7 font-normal mt-1 mb-2 flex flex-col">
             <li>Check-in after 2:00 pm</li>
             <li>Checkout before 11:00 am</li>
             <li>3 guests maximum</li>
           </ul>
-          <a href="#" className="text-[14px] underline text-[#717171] font-semibold decoration-[#717171]">Learn more</a>
+          <a href="#" className="text-[14px] underline text-[#000000] font-semibold decoration-[#717171]">Learn more</a>
         </div>
 
         {/* Safety & property */}
@@ -47,12 +47,12 @@ const ThingsToKnow = () => {
             </svg>
           </div>
           <h3 className="font-semibold text-[16px]">Safety & property</h3>
-          <ul className="text-[14px] text-[#717171] leading-[15px] flex flex-col">
+          <ul className="text-[14px] text-[#717171] leading-7 font-normal mt-1 mb-2 flex flex-col">
             <li>Carbon monoxide alarm not reported</li>
             <li>Smoke alarm not reported</li>
             <li>Exterior security cameras on property</li>
           </ul>
-          <a href="#" className="text-[14px] underline text-[#717171] font-semibold decoration-[#717171]">Learn more</a>
+          <a href="#" className="text-[14px] underline text-[#000000] font-semibold decoration-[#717171]">Learn more</a>
         </div>
         
       </div>
